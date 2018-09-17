@@ -1,6 +1,6 @@
 public class Main {
 
-
+    //doubly linked linked list
     static public class Node{
         int data;
         Node next;
@@ -75,6 +75,7 @@ public class Main {
        //Place print here to print out forward Linked List
 //        System.out.println(h.data);
        recursivePrint(h.next);
+
        //Place print here to print out Linked List in Reverse
        System.out.println(h.data);
 
@@ -109,6 +110,43 @@ public class Main {
             head=head.next;
         }
         System.out.println();
+    }
+
+    //method to reverse only the part of the linked list that is between m and n inclusive
+    static public Node recursiveReverseMToN(Node cur, Node mPtr, int count, int m, int n){
+        if(cur==null){
+            return null;
+        }
+        //if on node M, make the mptr equal to this node
+        if(count==m){
+            mPtr = cur;
+        }
+
+        //if on node N, swap the node's data with the mth's node data
+        //return the next of mPtr
+        if(count==n){
+            int temp = mPtr.data;
+            mPtr.data = cur.data;
+            cur.data = temp;
+            return mPtr.next;
+
+        }
+        //recursion, go to next node until end is found or n is found
+        Node tempM = recursiveReverseMToN(cur.next,mPtr,count+1, m, n);
+
+        if(tempM == null){
+            return null;
+        }
+
+        //swap data until all data has been swapped
+        if(count>(m+(n-m)/2)&&n!=m+1){
+            int temp = tempM.data;
+            tempM.data = cur.data;
+            cur.data = temp;
+            return tempM.next;
+        }
+
+        return cur;
     }
 
 }
